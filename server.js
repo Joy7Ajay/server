@@ -7,7 +7,7 @@ app.use(json());
 
 const port = 8001;
 
-const name = "log";
+const name = "Joy";
 
 app.listen(port, (res,req) =>{
     console.log(`server is running on port ${port}`)
