@@ -7,7 +7,7 @@ app.use(json());
 
 const port = 8001;
 
-const name = "Joy";
+const name = "log";
 
 app.listen(port, (res,req) =>{
     console.log(`server is running on port ${port}`)
@@ -25,3 +25,4 @@ app.get("/hello", (req,res) =>{
 //Javascript is a client side language
 //JSON is Javascript Object Notation
 //`` = back ticks - embed jaascriot code, adding variale into a stsatement
+
