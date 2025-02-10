@@ -73,3 +73,13 @@ fetchDatapromise()
     .catch(error => console.error("Error handling after promise:", error));
 
 
+async function callAsync(){
+    try{
+        const data = await fetchDataasync();
+        displayInfo(data);
+    }  catch (error){
+        console.error("Error hanlding after async/await:", error);
+    }
+}
+
+callAsync();
