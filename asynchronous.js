@@ -1,4 +1,4 @@
-const Data_url = "https://www.filesampleshub.com/download/code/json/sample3.json";
+const Data_url = "https://www.filesampleshub.com/download/code/json/sample1.json";
 
 //callbacks
 function fetchDataCallback(callback){
@@ -58,13 +58,6 @@ function displayInfo(data) {
 }
 
 
-
-
-
-
-
-
-
 // using the function
 fetchDataCallback((error, data)=>{
     if (error){
@@ -78,12 +71,14 @@ fetchDatapromise()
     .then(data => displayInfo(data))
     .catch(error => console.error("Error handling after promise:", error));
 
-    (async () =>{
-        try{
-            const data =await fetchDataasync();
-            displayInfo(data);
-        } catch (error) {
-            console.error("Error handling after async/await:",error);
-        }
-    }) ();
+
+
+(async () =>{
+    try{
+        const data =await fetchDataasync();
+        displayInfo(data);
+    } catch (error) {
+        console.error("Error handling after async/await:",error);
+    }
+});
 
