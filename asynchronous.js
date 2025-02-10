@@ -59,3 +59,17 @@ function displayInfo(products){
     });
 }
 
+// using the function
+fetchDataCallback((error, data)=>{
+    if (error){
+        console.error("Error fetching data(callback):", error);
+    } else {
+        displayInfo(data);
+    }
+});
+
+fetchDatapromise()
+    .then(data => displayInfo(data))
+    .catch(error => console.error("Error handling after promise:", error));
+
+
