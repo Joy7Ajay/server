@@ -1,7 +1,6 @@
-import fetch from 'node-fetch';
- // Ensure you have this import if you're using Node.js
-
-const Data_url = "https://www.filesampleshub.com/download/code/json/sample1.json";
+//const Data_url = "https://www.filesampleshub.com/download/code/json/sample1.json";
+const Data_url = "https://www.filesampleshub.com/download/code/json/sample2.json"
+//const Data_url = "https://www.filesampleshub.com/download/code/json/sample3.json"
 
 // Callbacks
 function fetchDataCallback(who, callback) {
@@ -9,7 +8,7 @@ function fetchDataCallback(who, callback) {
     fetch(Data_url)
         .then(response => {
             if (!response.ok) {
-                throw new Error('The network response is slow');
+                throw new Error('FAILED');
             }
             return response.json();
         })
@@ -29,7 +28,7 @@ function fetchDatapromise(who) {
     return fetch(Data_url)
         .then(response => {
             if (!response.ok) {
-                throw new Error('The network response is slow');
+                throw new Error('FAILED');
             }
             return response.json();
         })
@@ -45,11 +44,11 @@ function fetchDatapromise(who) {
 
 // Async/Await
 async function fetchDataasync(who) {
-    console.log(`${who} is fetching data...`);
+    console.log(`${who} is fetching data...\n`);
     try {
         const response = await fetch(Data_url);
         if (!response.ok) {
-            throw new Error('The network response is slow');
+            throw new Error('FAILED');
         }
         const data = await response.json();
         console.log(`${who} fetched data successfully.`);
@@ -65,11 +64,12 @@ async function fetchDataasync(who) {
 // Display data function
 function displayInfo(data) {
     try {
-        console.log(JSON.stringify(data, null, 2));
+        console.log(JSON.stringify(data, null, 2),'\n\n\n');
     } catch (error) {
         console.error("Error converting data to JSON:", error);
     }
 }
+
 
 
 
@@ -99,8 +99,19 @@ fetchDatapromise('Promise')
     }
 })();
 
-/*
-The deprecation warning ([DEP0040] DeprecationWarning: 
-    The punycode module is deprecated) isn't directly related to your code but instead to one of the underlying dependencies in your environment. 
-    It's just a warning about the use of an old module (punycode), which won't affect the functionality, but it's worth noting for future compatibility.
-*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
