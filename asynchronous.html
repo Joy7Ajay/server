@@ -1,0 +1,155 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetch JSON Data - Callbacks, Promises, Async/Await</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .fetch-box {
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            min-height: 100px;
+        }
+        .error {
+            color: red;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Fetch JSON Data - Callbacks, Promises, Async/Await</h1>
+    <button onclick="fetchAllData()">Fetch Data</button>
+
+    <div class="container">
+        <div>
+            <h3>Callback Method</h3>
+            <div id="displaydiv1" class="fetch-box">Click "Fetch Data" to start.</div>
+        </div>
+
+        <div>
+            <h3>Promise Method</h3>
+            <div id="displaydiv2" class="fetch-box">Click "Fetch Data" to start.</div>
+        </div>
+
+        <div>
+            <h3>Async/Await Method</h3>
+            <div id="displaydiv3" class="fetch-box">Click "Fetch Data" to start.</div>
+        </div>
+    </div>
+
+    <script>
+        const apiUrl = "https://data.montgomerycountymd.gov/api/views/e54u-qx42/rows.json?";
+
+        // Function to generate table
+        function generateTable(data) {
+            let htmlContent = `
+                <table>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Breed</th>
+                        <th>Age</th>
+                    </tr>`;
+
+            data.data.forEach(item => {
+                htmlContent += `
+                    <tr>
+                        <td>${item[8]}</td>
+                        <td>${item[11]}</td>
+                        <td>${item[12]}</td>
+                        <td>${item[16]}</td>
+                        <td>${item[13]}</td>
+                    </tr>`;
+            });
+
+            htmlContent += "</table>";
+            return htmlContent;
+        }
+
+        // Callbacks
+        function dataFetcher(callback) {
+            fetch(apiUrl)
+                .then(response => {
+                    if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
+                    return response.json();
+                })
+                .then(data => callback(null, data))
+                .catch(error => callback(error, null));
+        }
+
+        function displayData() {
+            dataFetcher((error, data) => {
+                if (error) {
+                    document.getElementById("displaydiv1").innerHTML = `<p class="error">There was a fetching error: ${error.message}</p>`;
+                    return;
+                }
+                document.getElementById("displaydiv1").innerHTML = generateTable(data);
+            });
+        }
+
+        // Promises
+        function promiseFetcher() {
+            fetch(apiUrl)
+                .then(response => {
+                    if (!response.ok) throw new Error("The response was not okay");
+                    return response.json();
+                })
+                .then(data => {
+                    document.getElementById("displaydiv2").innerHTML = generateTable(data);
+                })
+                .catch(error => {
+                    document.getElementById("displaydiv2").innerHTML = `<p class="error">There was an error fetching your data: ${error.message}</p>`;
+                });
+        }
+
+        // Async/Await
+        async function asyncDataFetching() {
+            try {
+                const response = await fetch(apiUrl);
+
+                if (!response.ok) throw new Error("The network is not okay");
+
+                const data = await response.json();
+                document.getElementById("displaydiv3").innerHTML = generateTable(data);
+            } catch (error) {
+                document.getElementById("displaydiv3").innerHTML = `<p class="error">Encountered a fetching error: ${error.message}</p>`;
+            }
+        }
+
+        // Fetch all methods
+        function fetchAllData() {
+            displayData();     // Callback method
+            promiseFetcher();  // Promise method
+            asyncDataFetching(); // Async/Await method
+        }
+    </script>
+
+</body>
+</html>
+
